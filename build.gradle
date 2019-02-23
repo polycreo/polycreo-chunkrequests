@@ -1,0 +1,95 @@
+// ================
+// Gradle configuration
+
+plugins {
+	id 'java-library'
+	id 'maven-publish'
+	id 'org.springframework.boot' version '2.1.6.RELEASE'
+	id 'com.jfrog.bintray' version '1.8.4'
+
+	// https://github.com/palantir/gradle-git-version
+	id 'com.palantir.git-version' version '0.12.2'
+
+	// code quality plugins
+	id 'checkstyle'
+	id 'pmd'
+	id 'jacoco'
+	id 'com.github.spotbugs' version '3.0.0'
+	id 'de.thetaphi.forbiddenapis' version '2.7'
+	id 'com.diffplug.gradle.spotless' version '3.26.1'
+}
+
+wrapper {
+	distributionType = Wrapper.DistributionType.ALL
+}
+
+// ================
+// Project metadata configuration
+
+group = 'org.ws2ten1'
+version = gitVersion()
+
+// ================
+// Build configuration
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+compileJava {
+	options.compilerArgs << "-Werror"
+	options.compilerArgs << "-Xlint:all" << "-Xlint:-processing" << "-Xlint:-deprecation"
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+repositories {
+	jcenter()
+	mavenCentral()
+	maven { url 'https://dl.bintray.com/ws2ten1/maven-release' }
+}
+
+dependencies {
+	implementation 'com.fasterxml.jackson.core:jackson-databind'
+	implementation 'org.slf4j:slf4j-api'
+
+	// lombok
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
+
+	// test
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework:spring-web'
+}
+
+bootJar {
+	enabled = false
+}
+
+jar {
+	enabled = true
+}
+
+// ================
+// Lint / Test configuration
+
+apply from: "${rootProject.projectDir}/config/checkstyle.gradle"
+apply from: "${rootProject.projectDir}/config/spotbugs.gradle"
+apply from: "${rootProject.projectDir}/config/pmd.gradle"
+apply from: "${rootProject.projectDir}/config/jacoco.gradle"
+apply from: "${rootProject.projectDir}/config/forbiddenapis.gradle"
+apply from: "${rootProject.projectDir}/config/spotless.gradle"
+
+tasks.withType(com.github.spotbugs.SpotBugsTask) {
+	reports {
+		html.enabled = true
+		xml.enabled = false
+	}
+}
+
+// ================
+// Deploy configuration
+
+apply from: "${rootProject.projectDir}/gradle/sourceArtifact.gradle"
+apply from: "${rootProject.projectDir}/gradle/bintray.gradle"
