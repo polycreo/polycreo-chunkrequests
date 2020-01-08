@@ -49,8 +49,8 @@ repositories {
 }
 
 dependencies {
-	implementation 'com.fasterxml.jackson.core:jackson-databind'
 	implementation 'org.slf4j:slf4j-api'
+	implementation 'com.fasterxml.jackson.core:jackson-databind'
 
 	// lombok
 	compileOnly 'org.projectlombok:lombok'
@@ -61,6 +61,9 @@ dependencies {
 	// test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework:spring-web'
+	testImplementation 'org.springframework.data:spring-data-commons'
+	testImplementation 'javax.persistence:javax.persistence-api'
+
 }
 
 bootJar {
