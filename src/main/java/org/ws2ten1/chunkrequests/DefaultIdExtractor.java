@@ -25,8 +25,7 @@ import java.util.function.Function;
 /**
  * Function to extract ID from entity.
  */
-public class DefaultIdExtractor<E, ID extends Serializable & Comparable<ID>> // -@cs[ClassTypeParameterName]
-		implements Function<E, ID> {
+public class DefaultIdExtractor implements Function<Object, Serializable> {
 	
 	private static final Collection<String> ID_ANNOTATION_NAME = Arrays.asList(
 			"javax.persistence.Id",
@@ -34,7 +33,7 @@ public class DefaultIdExtractor<E, ID extends Serializable & Comparable<ID>> // 
 	
 	
 	@Override
-	public ID apply(E entity) {
+	public Serializable apply(Object entity) {
 		if (entity == null) {
 			return null;
 		}
@@ -46,9 +45,7 @@ public class DefaultIdExtractor<E, ID extends Serializable & Comparable<ID>> // 
 					if (ID_ANNOTATION_NAME.contains(annotation.annotationType().getName())) {
 						field.setAccessible(true);
 						try {
-							@SuppressWarnings("unchecked")
-							ID id = (ID) field.get(entity);
-							return id;
+							return (Serializable) field.get(entity);
 						} catch (Exception e) { // NOPMD
 							// NOPMD ignore
 						}

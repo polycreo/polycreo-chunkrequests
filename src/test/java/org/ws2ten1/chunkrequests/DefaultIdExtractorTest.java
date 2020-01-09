@@ -17,6 +17,8 @@ package org.ws2ten1.chunkrequests;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.io.Serializable;
+
 import lombok.RequiredArgsConstructor;
 
 import org.junit.Test;
@@ -29,9 +31,9 @@ public class DefaultIdExtractorTest {
 	@Test
 	public void testMirageEntity() {
 		// setup
-		DefaultIdExtractor<MirageEntity, String> sut = new DefaultIdExtractor<>();
+		DefaultIdExtractor sut = new DefaultIdExtractor();
 		// exercise
-		String actual = sut.apply(new MirageEntity("aaa"));
+		Serializable actual = sut.apply(new MirageEntity("aaa"));
 		// verify
 		assertThat(actual).isEqualTo("aaa");
 	}
@@ -39,9 +41,9 @@ public class DefaultIdExtractorTest {
 	@Test
 	public void testJpaEntity() {
 		// setup
-		DefaultIdExtractor<JpaEntity, String> sut = new DefaultIdExtractor<>();
+		DefaultIdExtractor sut = new DefaultIdExtractor();
 		// exercise
-		String actual = sut.apply(new JpaEntity("bbb"));
+		Serializable actual = sut.apply(new JpaEntity("bbb"));
 		// verify
 		assertThat(actual).isEqualTo("bbb");
 	}
