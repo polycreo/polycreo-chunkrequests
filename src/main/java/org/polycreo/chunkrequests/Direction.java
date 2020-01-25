@@ -56,9 +56,8 @@ public enum Direction {
 		try {
 			return Direction.valueOf(value.toUpperCase(Locale.US));
 		} catch (Exception e) { // NOPMD
-			throw new IllegalArgumentException(String.format(Locale.US,
-					"Invalid value '%s' for orders given! Has to be either 'desc' or 'asc' (case insensitive).", value),
-					e);
+			throw new IllegalArgumentException(String.format(Locale.US, "Invalid value '%s' for orders given!"
+					+ " Has to be either 'desc' or 'asc' (case insensitive).", value), e);
 		}
 	}
 	
