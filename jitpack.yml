@@ -1,0 +1,5 @@
+jdk:
+  - openjdk8
+install:
+   - ./gradlew -is -Pgroup=$GROUP -Pversion=$VERSION -xcheck clean build publishToMavenLocal
+   - find /home/jitpack
