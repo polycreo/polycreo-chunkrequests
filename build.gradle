@@ -4,7 +4,7 @@
 plugins {
 	id 'java-library'
 	id 'maven-publish'
-	id 'org.springframework.boot' version '2.2.2.RELEASE'
+	id 'org.springframework.boot' version '2.2.4.RELEASE'
 	id 'com.jfrog.bintray' version '1.8.4'
 
 	// https://github.com/palantir/gradle-git-version
@@ -14,8 +14,9 @@ plugins {
 	id 'checkstyle'
 	id 'pmd'
 	id 'jacoco'
-	id 'com.github.spotbugs' version '3.0.0'
+	id 'com.github.spotbugs' version '3.0.0' apply false
 	id 'de.thetaphi.forbiddenapis' version '2.7'
+	id 'de.aaschmid.cpd' version '3.1'
 	id 'com.diffplug.gradle.spotless' version '3.27.1'
 }
 
@@ -28,7 +29,9 @@ wrapper {
 // Project metadata configuration
 
 group = 'org.polycreo'
-version = gitVersion()
+if (version == "unspecified") {
+	version = gitVersion()
+}
 
 // ================
 // Build configuration
@@ -81,6 +84,7 @@ jar {
 apply from: "${rootProject.projectDir}/config/checkstyle.gradle"
 apply from: "${rootProject.projectDir}/config/spotbugs.gradle"
 apply from: "${rootProject.projectDir}/config/pmd.gradle"
+apply from: "${rootProject.projectDir}/config/cpd.gradle"
 apply from: "${rootProject.projectDir}/config/jacoco.gradle"
 apply from: "${rootProject.projectDir}/config/forbiddenapis.gradle"
 apply from: "${rootProject.projectDir}/config/spotless.gradle"
