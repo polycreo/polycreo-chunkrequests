@@ -3,10 +3,10 @@ publishing {
 		mavenJava(MavenPublication) {
 			from components.java
 			artifact sourcesJar {
-				classifier "sources"
+				classifier 'sources'
 			}
 			artifact javadocJar {
-				classifier "javadoc"
+				classifier 'javadoc'
 			}
 			pom.withXml {
 				asNode().children().last() + {
