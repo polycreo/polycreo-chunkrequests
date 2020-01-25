@@ -112,4 +112,4 @@ tasks.withType(Test) {
 // Deploy configuration
 
 apply from: "${rootProject.projectDir}/gradle/sourceArtifact.gradle"
-apply from: "${rootProject.projectDir}/gradle/bintray.gradle"
+apply from: "${rootProject.projectDir}/gradle/publish.gradle"
