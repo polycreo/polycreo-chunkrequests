@@ -16,10 +16,11 @@ plugins {
 	id 'jacoco'
 	id 'com.github.spotbugs' version '3.0.0'
 	id 'de.thetaphi.forbiddenapis' version '2.7'
-	id 'com.diffplug.gradle.spotless' version '3.26.1'
+	id 'com.diffplug.gradle.spotless' version '3.27.1'
 }
 
 wrapper {
+	gradleVersion = '6.0.1'
 	distributionType = Wrapper.DistributionType.ALL
 }
 
@@ -88,6 +89,18 @@ tasks.withType(com.github.spotbugs.SpotBugsTask) {
 	reports {
 		html.enabled = true
 		xml.enabled = false
+	}
+}
+
+tasks.withType(Test) {
+	exclude "**/*\$*", "**/*Tests.class", "**/examples/**"
+	reports {
+		html.enabled = true
+		junitXml.outputPerTestCase = false
+	}
+	testLogging.exceptionFormat = 'full'
+	beforeTest {
+		logger.lifecycle("{} > {}", it.parent.name, it.name)
 	}
 }
 
