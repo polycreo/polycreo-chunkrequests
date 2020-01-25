@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ws2ten1.chunkrequests;
+package org.polycreo.chunkrequests;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
