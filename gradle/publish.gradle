@@ -1,6 +1,14 @@
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
+			versionMapping {
+				usage('java-api') {
+					fromResolutionOf('runtimeClasspath')
+				}
+				usage('java-runtime') {
+					fromResolutionResult()
+				}
+			}
 			from components.java
 			artifact sourcesJar {
 				classifier 'sources'
